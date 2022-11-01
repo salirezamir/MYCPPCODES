@@ -10,15 +10,12 @@ int main()
     cin >> np;
     char ArrAnswer[n];
     string StrInput[n * np];
-    j = n * np;
-    while (i != j)
+    while (i != n * np)
     {
         cin >> StrInput[i];
         i++;
     }
     i = 0;
-    j = 0;
-    // StrAnswer.length() + 1
     strcpy(ArrAnswer, StrAnswer.c_str());
     while (i != np)
     {

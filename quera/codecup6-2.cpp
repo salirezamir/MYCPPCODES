@@ -2,33 +2,25 @@
 using namespace std;
 int main()
 {
-    int x[5], y[5], z = 0, k = 0, I;
-    bool b = false;
+    int x[5], y[5], I;
     cin >> x[0] >> x[1] >> x[2] >> x[3] >> x[4];
     cin >> y[0] >> y[1] >> y[2] >> y[3] >> y[4];
-    while (k != 5)
+    for (int k = 0; k < 5; k++)
     {
-        while (z != 5)
+        for (int z = 0; z < 5; z++)
         {
             I = 0;
-            I = I + (x[(k) % 5] + y[(z) % 5]) % 10;
-            I = I + ((x[(k + 1) % 5] + y[(z + 1) % 5]) % 10) * 10;
-            I = I + ((x[(k + 2) % 5] + y[(z + 2) % 5]) % 10) * 100;
+            I = ((x[k] + y[z]) % 10) * 100;
+            I += ((x[(k + 1) % 5] + y[(z + 1) % 5]) % 10) * 10;
+            I += ((x[(k + 2) % 5] + y[(z + 2) % 5]) % 10);
+            // cout << I << "\n";
             if (I % 6 == 0)
             {
-                b = true;
+                cout << "Boro joloo :)";
+                return 1;
             }
-            z++;
         }
-        z = 0;
-        k++;
     }
-    if (b)
-    {
-        cout << "Boro joloo :)";
-    }
-    else
-    {
-        cout << "Gir oftadi :(";
-    }
+    cout << "Gir oftadi :(";
+    return 0;
 }
