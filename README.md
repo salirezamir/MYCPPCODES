@@ -1,6 +1,4 @@
 # MYCPPCODES
 :)
 # Rights of Use
-کد ها صرفا جهت کمک کردن می‌باشند
-کپی فقط با ذکر منبع بلامانع است
-:)
+Using these code in all forms without My (Seyed Alireza Mirabedini) permisson is NOT ACCEPTABLE !!!!
