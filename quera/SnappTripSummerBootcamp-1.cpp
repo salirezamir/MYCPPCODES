@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstring>
 using namespace std;
+
 int main()
 {
     int n, np, i = 0, r = 0, j = 0;
