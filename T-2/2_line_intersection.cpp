@@ -45,7 +45,7 @@ int main()
     if (funcs[1][0] == funcs[0][0])
     {
         cout << "0";
-        // return 0;
+        return 0;
     }
     else if (oh[0])
     {
