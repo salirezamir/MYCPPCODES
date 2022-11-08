@@ -25,10 +25,8 @@ double intersectionY(double f[2], double g[2])
 
 int main()
 {
-    bool oh[2];
-    oh[0] = false;
-    oh[1] = false;
-    double points[5][2], funcs[2][2], ops;
+    bool oh[2]={false,false};
+    double points[5][2], funcs[2][2], ops,EPS=1E-3;
     for (int i = 0; i < 4; i++)
     {
         cin >> points[i][0] >> points[i][1];
@@ -44,8 +42,24 @@ int main()
     }
     if (funcs[1][0] == funcs[0][0])
     {
+        if (EPS + points[2][0] >= points[1][0] && points[3][0] - EPS <= points[1][0] || points[2][0] - EPS <= points[1][0] && EPS + points[3][0] >= points[1][0])
+        {
+            if (EPS + points[2][1] >= points[1][1] && points[3][1] - EPS <= points[1][1] || points[2][1] - EPS <= points[1][1] && EPS + points[3][1] >= points[1][1])
+            {
+                        cout << "1";
+                        return 1;
+            }
+        }
+        if (EPS + points[2][0] >= points[0][0] && points[3][0] - EPS <= points[0][0] || points[2][0] - EPS <= points[0][0] && EPS + points[3][0] >= points[0][0])
+        {
+            if (EPS + points[2][1] >= points[0][1] && points[3][1] - EPS <= points[0][1] || points[2][1] - EPS <= points[0][1] && EPS + points[3][1] >= points[0][1])
+            {
+                        cout << "1";
+                        return 1;
+            }
+        }
         cout << "0";
-        // return 0;
+        return 0;
     }
     else if (oh[0])
     {
@@ -68,7 +82,7 @@ int main()
     {
         ops = funcs[0][0] * points[3][0] + funcs[0][1];
         if (points[0][1] >= ops && points[1][1] <= ops || points[0][1] <= ops && points[1][1] >= ops)
-        {
+        {  
             cout << "1";
             return 1;
         }
@@ -77,13 +91,13 @@ int main()
     {
         points[4][0] = intersectionX(funcs[0], funcs[1]);
         points[4][1] = intersectionY(funcs[0], funcs[1]);
-        if (points[2][0] >= points[4][0] && points[3][0] <= points[4][0] || points[2][0] <= points[4][0] && points[3][0] >= points[4][0])
+        if (EPS + points[2][0] >= points[4][0] && points[3][0] - EPS <= points[4][0] || points[2][0] - EPS <= points[4][0] && EPS + points[3][0] >= points[4][0])
         {
-            if (points[2][1] >= points[4][1] && points[3][1] <= points[4][1] || points[2][1] <= points[4][1] && points[3][1] >= points[4][1])
+            if (EPS + points[2][1] >= points[4][1] && points[3][1] - EPS <= points[4][1] || points[2][1] - EPS <= points[4][1] && EPS + points[3][1] >= points[4][1])
             {
-                if (points[0][0] >= points[4][0] && points[1][0] <= points[4][0] || points[0][0] <= points[4][0] && points[1][0] >= points[4][0])
+                if (EPS + points[0][0] >= points[4][0] && points[1][0] - EPS <= points[4][0] || points[0][0] - EPS <= points[4][0] && EPS + points[1][0] >= points[4][0])
                 {
-                    if (points[0][1] >= points[4][1] && points[1][1] <= points[4][1] || points[0][1] <= points[4][1] && points[1][1] >= points[4][1])
+                    if (EPS + points[0][1] >= points[4][1] && points[1][1] - EPS <= points[4][1] || points[0][1] - EPS <= points[4][1] && EPS + points[1][1] >= points[4][1])
                     {
                         cout << "1";
                         return 1;
