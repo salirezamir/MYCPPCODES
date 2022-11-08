@@ -5,7 +5,7 @@ using namespace std;
 
 int main()
 {
-    int k, l, fit, delta[3], NTI[2], n;
+    long k, l, fit, delta[3], NTI[2], n;
     bool dbn[2];
     cin >> k >> NTI[0] >> NTI[1];
     // fix neg
