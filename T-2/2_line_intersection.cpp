@@ -26,7 +26,7 @@ double intersectionY(double f[2], double g[2])
 int main()
 {
     bool oh[2]={false,false};
-    double points[5][2], funcs[2][2], ops,EPS=1E-3;
+    double points[5][2], funcs[2][2], ops,EPS=1E-9;
     for (int i = 0; i < 4; i++)
     {
         cin >> points[i][0] >> points[i][1];
