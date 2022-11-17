@@ -30,7 +30,7 @@ int main()
             power = 1;
             if (star)
                 cout << "*";
-            while (double(input / (pow(i, power))) == int((input / (pow(i, power)))))
+            while (double(input / (pow(i, power))) == long((input / (pow(i, power)))))
             {
                 power++;
             }
