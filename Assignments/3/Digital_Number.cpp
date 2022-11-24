@@ -2,7 +2,6 @@
 #include <math.h>
 
 using namespace std;
-
 void digit0(char ch, int size)
 {
     for (int i = 1; i <= size; i++)
@@ -58,7 +57,7 @@ void digit2(char ch, int size)
     cout << endl;
     return;
 }
-
+/*
 void digit3(char ch, int size)
 {
     for (int i = 1; i <= size; i++)
@@ -106,7 +105,7 @@ void digit4(char ch, int size)
     }
     return;
 }
-
+*/
 void digit5(char ch, int size)
 {
     for (int i = 1; i <= size; i++)
@@ -130,7 +129,7 @@ void digit5(char ch, int size)
     cout << endl;
     return;
 }
-
+/*
 void digit6(char ch, int size)
 {
     for (int i = 1; i <= size; i++)
@@ -169,7 +168,7 @@ void digit7(char ch, int size)
     }
     return;
 }
-
+*/
 void digit8(char ch, int size)
 {
     for (int i = 1; i <= size; i++)
@@ -197,7 +196,7 @@ void digit8(char ch, int size)
     cout << endl;
     return;
 }
-
+/*
 void digit9(char ch, int size)
 {
     for (int i = 1; i <= size; i++)
@@ -224,7 +223,7 @@ void digit9(char ch, int size)
     cout << endl;
     return;
 }
-
+*/
 long long reverse(long long in)
 {
     long long out = 0;
@@ -251,25 +250,30 @@ void digitPrinter(char ch, int n, int size)
         digit2(ch, size);
         break;
     case 3:
-        digit3(ch, size);
+        // digit3(ch, size);
+        cout << "no implementation for this digit" << endl;
         break;
     case 4:
-        digit4(ch, size);
+        // digit4(ch, size);
+        cout << "no implementation for this digit" << endl;
         break;
     case 5:
         digit5(ch, size);
         break;
     case 6:
-        digit6(ch, size);
+        // digit6(ch, size);
+        cout << "no implementation for this digit" << endl;
         break;
     case 7:
-        digit7(ch, size);
+        // digit7(ch, size);
+        cout << "no implementation for this digit" << endl;
         break;
     case 8:
         digit8(ch, size);
         break;
     case 9:
-        digit9(ch, size);
+        // digit9(ch, size);
+        cout << "no implementation for this digit" << endl;
         break;
     }
     return;
@@ -292,6 +296,14 @@ int main()
             cout << endl;
     }
     if (num % 10 == 0)
-        digit0(k, s);
+    {
+        while (num % 10 == 0)
+        {
+            digit0(k, s);
+            num/=10;
+            if (num % 10 == 0)
+                cout << endl;
+        }
+    }
     return 0;
 }
