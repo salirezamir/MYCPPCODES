@@ -3,19 +3,32 @@
 
 using namespace std;
 
+class Stuff
+{
+public:
+    int BC;
+    int SC;
+    int Rep;
+    string Name;
+    Stuff(int bc, int sc, int rep, string name)
+    {
+        BC = bc;
+        SC = sc;
+        Rep = rep;
+        Name = name;
+    }
+};
+
 class HSD
 {
 private:
-    vector<int> BC;
-    vector<int> SC;
-    vector<int> rep;
-    vector<string> Name;
+    vector<Stuff> stuff;
     long Buy = 0, Sell = 0;
     int Find(string nam)
     {
-        for (int i = 0; i < Name.size(); i++)
+        for (int i = 0; i < stuff.size(); i++)
         {
-            if (Name.at(i) == nam)
+            if (stuff.at(i).Name == nam)
                 return i;
         }
         return -1;
@@ -29,10 +42,8 @@ public:
             cout << "!\n";
             return;
         }
-        BC.push_back(buy);
-        SC.push_back(sel);
-        Name.push_back(nam);
-        rep.push_back(0);
+        Stuff tmp(buy, sel, 0, nam);
+        stuff.push_back(tmp);
         return;
     }
     void Delete(string nam)
@@ -43,26 +54,23 @@ public:
             cout << "!\n";
             return;
         }
-        if (rep.at(loc) != 0)
+        if (stuff.at(loc).Rep != 0)
         {
             cout << "!\n";
             return;
         }
-        Name.erase(Name.begin() + loc);
-        BC.erase(BC.begin() + loc);
-        SC.erase(SC.begin() + loc);
-        rep.erase(rep.begin() + loc);
+        stuff.erase(stuff.begin() + loc);
     }
     void SellF(string nam, int count)
     {
         int loc = Find(nam);
-        if (rep.at(loc) <= count)
+        if (stuff.at(loc).Rep <= count)
         {
             cout << "!\n";
             return;
         }
-        rep.at(loc) -= count;
-        Sell += SC.at(loc) * count;
+        stuff.at(loc).Rep -= count;
+        Sell += stuff.at(loc).SC * count;
         return;
     }
     void BuyF(string nam, int count)
@@ -73,14 +81,14 @@ public:
             cout << "!\n";
             return;
         }
-        rep.at(loc) += count;
-        Buy += BC.at(loc) * count;
+        stuff.at(loc).Rep += count;
+        Buy += stuff.at(loc).BC * count;
     }
     void Status()
     {
-        for (int i = 0; i < Name.size(); i++)
+        for (int i = 0; i < stuff.size(); i++)
         {
-            cout << Name.at(i) << " " << BC.at(i) << " " << SC.at(i) << " " << rep.at(i) << endl;
+            cout << stuff.at(i).Name << " " << stuff.at(i).BC << " " << stuff.at(i).SC << " " << stuff.at(i).Rep << endl;
         }
         return;
     }
