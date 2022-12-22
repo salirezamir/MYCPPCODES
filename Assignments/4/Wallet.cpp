@@ -16,7 +16,7 @@ public:
     }
     void alert()
     {
-        if (total<=50000)
+        if (total == 50000)
             cout << "Alert!\n";
         return;
     }
@@ -56,5 +56,5 @@ public:
 
 int main()
 {
-    //Seyed Alireza Mirabedini
+    // Seyed Alireza Mirabedini
 }
