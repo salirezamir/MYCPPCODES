@@ -14,10 +14,17 @@ public:
         total = x;
         saving = y;
     }
+    void alert()
+    {
+        if (total<=50000)
+            cout << "Alert!\n";
+        return;
+    }
     void add(int in)
     {
         total += in;
         cout << in << " added!\n";
+        alert();
         return;
     }
     void withdraw(int in)
@@ -25,10 +32,12 @@ public:
         if (total < in)
         {
             cout << "low account balance\n";
+            alert();
             return;
         }
         total -= in;
         cout << in << " withdrawed successfully\n";
+        alert();
         return;
     }
     void save(int in, float per)
@@ -36,6 +45,8 @@ public:
         saving += in * per;
         total += in * (1 - per);
         cout << in * per << " saved!\n";
+        alert();
+        return;
     }
     int account_balance()
     {
