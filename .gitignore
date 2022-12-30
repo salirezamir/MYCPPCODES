@@ -6,7 +6,7 @@
 .vscode/*.code-snippets
 *.exe
 *.swp
-*.exc
+*.out
 Others.*
 # Local History for Visual Studio Code
 .history/
