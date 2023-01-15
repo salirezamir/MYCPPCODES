@@ -23,31 +23,29 @@ void ConClr(int clr)
 
 void Make_Game_Borad()
 {
-    int &j = boardsize;
-    j = 2 * (j + 1);
     ConClr(238);
-    for (int i = 1; i <= j; i++)
+    for (int i = 0; i <= boardsize; i++)
     {
-        ConXY(1, i);
+        ConXY(2 * i, 0);
+        cout << "  ";
+        ConXY(0, i);
         cout << " ";
-        ConXY(i, 1);
-        cout << " ";
-        ConXY(j + 1, j - i + 1);
-        cout << " ";
-        ConXY(j - i + 1, j);
+        ConXY(2 * i, boardsize + 1);
+        cout << "  ";
+        ConXY(2 * boardsize + 1, i + 1);
         cout << " ";
     }
+    ConXY(2 * boardsize + 1, 0);
+    cout << " ";
     ConClr(7);
-    j = -1 + j / 2;
-    for (int i = 1; i <= j; i++)
+    for (int i = 0; i < boardsize; i++)
     {
-        for (int k = 1; k <= j; k++)
+        for (int j = 0; j < boardsize; j++)
         {
-            ConXY(2 * i + 1, 2 * k + 1);
+            ConXY(2 * i + 2, j + 1);
             cout << "-";
         }
     }
-    ConXY(30, 30);
 }
 
 void start_menu()
