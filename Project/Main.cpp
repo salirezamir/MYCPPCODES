@@ -25,6 +25,30 @@ void ConClr(int clr)
 class Game
 {
 private:
+    // {{{},{},{}},{{},{},{}},{{},{},{}}},
+    bool easy_Single[3][3] = {{true, false, false}, {false, false, false}, {false, false, false}};
+    bool easy_Bar_1[3][3] = {{{true}, {true}, {false}}, {{false}, {false}, {false}}, {{false}, {false}, {false}}};
+    bool easy_Bar_2[3][3] = {{{true}, {false}, {false}}, {{true}, {false}, {false}}, {{false}, {false}, {false}}};
+    bool easy_Square[3][3] = {{{true}, {true}, {false}}, {{true}, {true}, {false}}, {{false}, {false}, {false}}};
+    bool Norm_L_1[3][3] = {{{false}, {true}, {false}}, {{true}, {true}, {false}}, {{false}, {false}, {false}}};
+    bool Norm_L_2[3][3] = {{{true}, {false}, {false}}, {{true}, {true}, {false}}, {{false}, {false}, {false}}};
+    bool Norm_L_3[3][3] = {{{true}, {true}, {false}}, {{false}, {true}, {false}}, {{false}, {false}, {false}}};
+    bool Norm_L_4[3][3] = {{{true}, {true}, {false}}, {{true}, {false}, {false}}, {{false}, {false}, {false}}};
+    bool Norm_Bar_3_1[3][3] = {{{true}, {false}, {false}}, {{true}, {false}, {false}}, {{true}, {false}, {false}}};
+    bool Norm_Bar_3_2[3][3] = {{{true}, {true}, {true}}, {{false}, {false}, {false}}, {{false}, {false}, {false}}};
+    bool Hard_LL_1[3][3] = {{{true}, {true}, {false}}, {{false}, {true}, {true}}, {{false}, {false}, {false}}};
+    bool Hard_LL_2[3][3] = {{{false}, {true}, {true}}, {{true}, {true}, {false}}, {{false}, {false}, {false}}};
+    bool Hard_LL_3[3][3] = {{{true}, {false}, {false}}, {{true}, {true}, {false}}, {{false}, {true}, {false}}};
+    bool Hard_LL_4[3][3] = {{{false}, {true}, {false}}, {{true}, {true}, {false}}, {{true}, {false}, {false}}};
+    bool Hard_T_1[3][3] = {{{true}, {true}, {true}}, {{false}, {true}, {false}}, {{false}, {false}, {false}}};
+    bool Hard_T_2[3][3] = {{{false}, {true}, {false}}, {{true}, {true}, {true}}, {{false}, {false}, {false}}};
+    bool Hard_T_3[3][3] = {{{false}, {true}, {false}}, {{true}, {true}, {false}}, {{false}, {true}, {false}}};
+    bool Hard_T_4[3][3] = {{{true}, {false}, {false}}, {{true}, {true}, {false}}, {{true}, {false}, {false}}};
+    bool Hard_L_1[3][3] = {{{true}, {true}, {true}}, {{true}, {false}, {false}}, {{false}, {false}, {false}}};
+    bool Hard_L_2[3][3] = {{{true}, {true}, {true}}, {{false}, {false}, {true}}, {{false}, {false}, {false}}};
+    bool Hard_L_3[3][3] = {{{true}, {false}, {false}}, {{true}, {true}, {true}}, {{false}, {false}, {false}}};
+    bool Hard_L_4[3][3] = {{{false}, {false}, {true}}, {{true}, {true}, {true}}, {{false}, {false}, {false}}};
+    bool Norm_Bar_4[4] = {true};
     bool Board[100][100] = {false};
 
 public:
@@ -152,220 +176,8 @@ public:
             set[counter - 1] = 116;
         }
     }
-    void change_Game_Board(int X, int mod)
+    void change_Game_Board(int X, int x, int y, bool obj[3][3])
     {
-        bool obj[4][4];
-        int x = 0, y = 0;
-        switch (mod)
-        {
-        case 1:
-            x = 1;
-            y = 1;
-            obj[0][0] = true;
-            break;
-        case 2:
-            x = 2;
-            y = 2;
-            obj[0][0] = true;
-            obj[0][1] = true;
-            obj[1][0] = true;
-            obj[1][1] = true;
-            break;
-        case 3:
-            x = 2;
-            y = 1;
-            obj[1][0] = true;
-            obj[1][1] = true;
-            break;
-        case 4:
-            x = 1;
-            y = 2;
-            obj[0][1] = true;
-            obj[0][1] = true;
-            break;
-        case 5:
-            x = 3;
-            y = 1;
-            obj[0][0] = true;
-            obj[1][0] = true;
-            obj[2][0] = true;
-            break;
-        case 6:
-            y = 3;
-            x = 1;
-            obj[0][0] = true;
-            obj[0][1] = true;
-            obj[0][2] = true;
-            break;
-        case 7:
-            x = 4;
-            y = 1;
-            obj[0][0] = true;
-            obj[1][0] = true;
-            obj[2][0] = true;
-            obj[3][0] = true;
-            break;
-        case 8:
-            x = 1;
-            y = 4;
-            obj[0][0] = true;
-            obj[0][1] = true;
-            obj[0][2] = true;
-            obj[0][3] = true;
-            break;
-        case 9:
-            x = 2;
-            y = 2;
-            obj[0][0] = false;
-            obj[0][1] = true;
-            obj[1][0] = true;
-            obj[1][1] = true;
-            break;
-        case 10:
-            x = 2;
-            y = 2;
-            obj[0][0] = true;
-            obj[0][1] = true;
-            obj[1][0] = false;
-            obj[1][1] = true;
-            break;
-        case 11:
-            x = 2;
-            y = 2;
-            obj[0][0] = true;
-            obj[0][1] = false;
-            obj[1][0] = true;
-            obj[1][1] = true;
-            break;
-        case 12:
-            x = 2;
-            y = 2;
-            obj[0][0] = true;
-            obj[0][1] = true;
-            obj[1][0] = true;
-            obj[1][1] = false;
-            break;
-        case 13:
-            x = 3;
-            y = 2;
-            obj[0][0] = true;
-            obj[0][1] = false;
-            obj[1][0] = true;
-            obj[1][1] = true;
-            obj[2][0] = false;
-            obj[2][1] = true;
-            break;
-        case 14:
-            x = 3;
-            y = 2;
-            obj[0][0] = false;
-            obj[0][1] = true;
-            obj[1][0] = true;
-            obj[1][1] = true;
-            obj[2][0] = true;
-            obj[2][1] = false;
-            break;
-        case 15:
-            x = 2;
-            y = 3;
-            obj[0][0] = true;
-            obj[0][1] = true;
-            obj[0][2] = false;
-            obj[1][0] = false;
-            obj[1][1] = true;
-            obj[1][2] = true;
-            break;
-        case 16:
-            x = 2;
-            y = 3;
-            obj[0][0] = false;
-            obj[0][1] = true;
-            obj[0][2] = true;
-            obj[1][0] = true;
-            obj[1][1] = true;
-            obj[1][2] = false;
-            break;
-        case 17:
-            x = 3;
-            y = 2;
-            obj[0][0] = true;
-            obj[0][1] = false;
-            obj[1][0] = true;
-            obj[1][1] = true;
-            obj[2][0] = true;
-            obj[2][1] = false;
-            break;
-        case 18:
-            x = 3;
-            y = 2;
-            obj[0][0] = false;
-            obj[0][1] = true;
-            obj[1][0] = true;
-            obj[1][1] = true;
-            obj[2][0] = false;
-            obj[2][1] = true;
-            break;
-        case 19:
-            x = 2;
-            y = 3;
-            obj[0][0] = false;
-            obj[0][1] = true;
-            obj[0][2] = false;
-            obj[1][0] = true;
-            obj[1][1] = true;
-            obj[1][2] = true;
-            break;
-        case 20:
-            x = 2;
-            y = 3;
-            obj[0][0] = true;
-            obj[0][1] = true;
-            obj[0][2] = true;
-            obj[1][0] = false;
-            obj[1][1] = true;
-            obj[1][2] = false;
-            break;
-        case 21:
-            x = 3;
-            y = 2;
-            obj[0][0] = true;
-            obj[0][1] = false;
-            obj[1][0] = true;
-            obj[1][1] = false;
-            obj[2][0] = true;
-            obj[2][1] = true;
-            break;
-        case 22:
-            x = 3;
-            y = 2;
-            obj[0][0] = true;
-            obj[0][1] = true;
-            obj[1][0] = true;
-            obj[1][1] = false;
-            obj[2][0] = true;
-            obj[2][1] = false;
-            break;
-        case 23:
-            x = 3;
-            y = 2;
-            obj[0][0] = false;
-            obj[0][1] = true;
-            obj[1][0] = false;
-            obj[1][1] = true;
-            obj[2][0] = true;
-            obj[2][1] = true;
-            break;
-        case 24:
-            x = 3;
-            y = 2;
-            obj[0][0] = true;
-            obj[0][1] = true;
-            obj[1][0] = false;
-            obj[1][1] = true;
-            obj[2][0] = false;
-            obj[2][1] = true;
-            break;
-        }
         int Y = 0;
         bool ok = false;
         for (int i = boardsize - y; i >= 0; i--)
@@ -382,7 +194,7 @@ public:
                         }
                     }
                 }
-                if (j == 2)
+                if (j == y - 1)
                 {
                     ok = true;
                 }
@@ -409,23 +221,17 @@ public:
         {
             for (int k = 0; k < x; k++)
             {
-                Board[X][Y + i] = obj[0][i];
+                Board[X + k][Y + i] = obj[k][i];
             }
         }
         Render_Game_Board();
     }
     void play()
     {
+        change_Game_Board(3, 2, 2, Norm_L_2);
+
         char cnt = _getch();
-        change_Game_Board(5, 24);
-        cnt = _getch();
-        change_Game_Board(7, 3);
-        cnt = _getch();
-        change_Game_Board(5, 7);
-        cnt = _getch();
-        change_Game_Board(3, 14);
-        cnt = _getch();
-        change_Game_Board(1, 18);
+        change_Game_Board(3, 2, 1, easy_Bar_2);
     }
 };
 
@@ -433,6 +239,7 @@ int main()
 {
     Game game;
     game.start_menu();
+    system("cls");
     game.Make_Game_Borad();
     char keyz = _getch();
     game.play();
