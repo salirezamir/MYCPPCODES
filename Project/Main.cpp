@@ -154,7 +154,7 @@ public:
     }
     void change_Game_Board(int X, int mod)
     {
-        bool obj[4][3];
+        bool obj[4][4];
         int x = 0, y = 0;
         switch (mod)
         {
@@ -417,6 +417,15 @@ public:
     void play()
     {
         char cnt = _getch();
+        change_Game_Board(5, 24);
+        cnt = _getch();
+        change_Game_Board(7, 3);
+        cnt = _getch();
+        change_Game_Board(5, 7);
+        cnt = _getch();
+        change_Game_Board(3, 14);
+        cnt = _getch();
+        change_Game_Board(1, 18);
     }
 };
 
