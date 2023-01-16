@@ -36,8 +36,23 @@ private:
     // d
     const bool Hard_T[2][2][3] = {{{{true}, {true}, {true}}, {{false}, {true}, {false}}}, {{{false}, {true}, {false}}, {{true}, {true}, {true}}}};
     const bool Hard_L[4][2][3] = {{{{true}, {true}, {true}}, {{true}, {false}, {false}}}, {{{true}, {true}, {true}}, {{false}, {false}, {true}}}, {{{true}, {false}, {false}}, {{true}, {true}, {true}}}, {{{false}, {false}, {true}}, {{true}, {true}, {true}}}};
+    bool Board[100][100] = {false};
 
 public:
+    void Render_Game_Board()
+    {
+        for (int i = 0; i < boardsize; i++)
+        {
+            for (int j = 0; j < boardsize; j++)
+            {
+                ConXY(2 * i + 2, j + 1);
+                if (Board[i][j])
+                    cout << '#';
+                else
+                    cout << '-';
+            }
+        }
+    }
     void Make_Game_Borad()
     {
         ConClr(238);
@@ -103,7 +118,7 @@ public:
                     ConXY(X - 3, Y + 6);
                     ConClr(6);
                     cout << "Please insert grids number : ";
-                    ConClr(7);
+                    ConClr(0);
                     cin >> boardsize;
                     ConXY(X - 6, Y + 6);
                     cout << "                                               ";
@@ -118,17 +133,18 @@ public:
                         ConXY(X - 4, Y + 7);
                         ConClr(100);
                         cout << "PRESS ANY KEY TO CONTINUE";
-                        ConClr(7);
+                        ConClr(0);
                         keyz = _getch();
                         ConXY(X - 3, Y + 5);
                         cout << "                                               ";
                         ConXY(X - 4, Y + 7);
                         cout << "                                               ";
+                        ConClr(7);
                     }
                 }
                 if (counter == 3)
                 {
-                    
+
                     system("cls");
                     exit(0);
                 }
@@ -147,6 +163,56 @@ public:
             set[counter - 1] = 116;
         }
     }
+    void change_Game_Board(int X, int x, int y)
+    {
+        int Y = 0;
+        bool ok = {false};
+        for (int i = boardsize - y; i >= 0; i--)
+        {
+            for (int j = 0; j < y; j++)
+            {
+                for (int k = 0; k < x; k++)
+                {
+                    if (Hard_L[1][k][j])
+                    {
+                        if (Board[X + k][i + j])
+                        {
+                            break;
+                        }
+                    }
+                }
+                if (j == 2)
+                {
+                    ok = true;
+                }
+            }
+            if (ok)
+            {
+                for (int j = i; j >= 0; j--)
+                {
+                    if (Board[X][j] || Board[X][j])
+                    {
+                        i = j;
+                        ok = false;
+                        break;
+                    }
+                }
+                if (ok)
+                {
+                    Y = i;
+                    break;
+                }
+            }
+        }
+        for (int i = Y; i < Y + 3; i++)
+        {
+            for (int k = 0; k < x; k++)
+            {
+                Board[X][i] = Hard_L[1][0][i - Y];
+            }
+        }
+        Render_Game_Board();
+    }
 };
 
 int main()
@@ -155,5 +221,9 @@ int main()
     game.start_menu();
     game.Make_Game_Borad();
     char keyz = _getch();
+    game.change_Game_Board(1, 2, 3);
+    keyz = _getch();
+    game.change_Game_Board(5, 2, 3);
+    keyz = _getch();
     return 0;
 }
