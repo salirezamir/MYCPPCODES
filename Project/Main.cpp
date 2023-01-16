@@ -180,9 +180,8 @@ public:
     }
     bool change_Game_Board(int X, int x, int y, bool obj[4][4])
     {
-        int Y = 0;
-        bool ok = false;
-        for (int i = boardsize - y; i >= 0; i--)
+        int Y = -1;
+        for (int i = 0; i <= boardsize - y; i++)
         {
             for (int j = 0; j < y; j++)
             {
@@ -192,42 +191,24 @@ public:
                     {
                         if (Board[X + k][i + j])
                         {
+                            Y = i - 1;
                             break;
                         }
                     }
                 }
-                if (j == y - 1)
-                {
-                    ok = true;
-                }
-            }
-            if (ok)
-            {
-                if (i < y)
-                {
-                    return false;
-                }
-                for (int j = i; j >= 0; j--)
-                {
-                    if (Board[X][j] || Board[X][j])
-                    {
-                        i = j;
-                        ok = false;
-                        break;
-                    }
-                }
-                if (ok)
-                {
-                    Y = i;
+                if (Y > 0)
                     break;
-                }
             }
+            if (Y > 0)
+                break;
         }
+        if (Y == -1)
+            Y = boardsize - y;
         for (int i = 0; i < y; i++)
         {
             for (int k = 0; k < x; k++)
             {
-                if(obj[k][i])
+                if (obj[k][i])
                     Board[X + k][Y + i] = true;
             }
         }
