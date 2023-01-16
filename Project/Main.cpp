@@ -25,7 +25,6 @@ void ConClr(int clr)
 class Game
 {
 private:
-
     bool Board[100][100] = {false};
 
 public:
@@ -155,82 +154,216 @@ public:
     }
     void change_Game_Board(int X, int mod)
     {
+        bool obj[4][3];
         int x = 0, y = 0;
         switch (mod)
         {
         case 1:
             x = 1;
             y = 1;
-            bool obj[1][1] = {true};
+            obj[0][0] = true;
             break;
         case 2:
-            bool obj[2][2] = {{{true}, {true}}, {{true}, {true}}};
+            x = 2;
+            y = 2;
+            obj[0][0] = true;
+            obj[0][1] = true;
+            obj[1][0] = true;
+            obj[1][1] = true;
             break;
         case 3:
-            bool obj[2][1] = {{true}, {true}};
+            x = 2;
+            y = 1;
+            obj[1][0] = true;
+            obj[1][1] = true;
             break;
         case 4:
-            bool obj[1][2] = {{{true}, {true}}};
+            x = 1;
+            y = 2;
+            obj[0][1] = true;
+            obj[0][1] = true;
             break;
         case 5:
-            bool obj[3][1] = {{true}, {true}, {true}};
+            x = 3;
+            y = 1;
+            obj[0][0] = true;
+            obj[1][0] = true;
+            obj[2][0] = true;
             break;
         case 6:
-            bool obj[1][3] = {{{true}, {true}, {true}}};
+            y = 3;
+            x = 1;
+            obj[0][0] = true;
+            obj[0][1] = true;
+            obj[0][2] = true;
             break;
         case 7:
-            bool obj[4][1] = {{true}, {true}, {true}, {true}};
+            x = 4;
+            y = 1;
+            obj[0][0] = true;
+            obj[1][0] = true;
+            obj[2][0] = true;
+            obj[3][0] = true;
             break;
         case 8:
-            bool obj[1][4] = {{{true}, {true}, {true}, {true}}};
+            x = 1;
+            y = 4;
+            obj[0][0] = true;
+            obj[0][1] = true;
+            obj[0][2] = true;
+            obj[0][3] = true;
             break;
         case 9:
-            bool obj[2][2] = {{{false}, {true}}, {{true}, {true}}};
+            x = 2;
+            y = 2;
+            obj[0][0] = false;
+            obj[0][1] = true;
+            obj[1][0] = true;
+            obj[1][1] = true;
             break;
         case 10:
-            bool obj[2][2] = {{{true}, {false}}, {{true}, {true}}};
+            x = 2;
+            y = 2;
+            obj[0][0] = true;
+            obj[0][1] = true;
+            obj[1][0] = false;
+            obj[1][1] = true;
             break;
         case 11:
-            bool obj[2][2] = {{{true}, {true}}, {{false}, {true}}};
+            x = 2;
+            y = 2;
+            obj[0][0] = true;
+            obj[0][1] = false;
+            obj[1][0] = true;
+            obj[1][1] = true;
             break;
         case 12:
-            bool obj[2][2] = {{{true}, {true}}, {{true}, {false}}};
+            x = 2;
+            y = 2;
+            obj[0][0] = true;
+            obj[0][1] = true;
+            obj[1][0] = true;
+            obj[1][1] = false;
             break;
         case 13:
-            bool obj[3][2] = {{{true}, {false}}, {{true}, {true}}, {{false}, {true}}};
+            x = 3;
+            y = 2;
+            obj[0][0] = true;
+            obj[0][1] = false;
+            obj[1][0] = true;
+            obj[1][1] = true;
+            obj[2][0] = false;
+            obj[2][1] = true;
             break;
         case 14:
-            bool obj[3][2] = {{{false}, {true}}, {{true}, {true}}, {{true}, {false}}};
+            x = 3;
+            y = 2;
+            obj[0][0] = false;
+            obj[0][1] = true;
+            obj[1][0] = true;
+            obj[1][1] = true;
+            obj[2][0] = true;
+            obj[2][1] = false;
             break;
         case 15:
-            bool obj[2][3] = {{{true}, {true}, {false}}, {{false}, {true}, {true}}};
+            x = 2;
+            y = 3;
+            obj[0][0] = true;
+            obj[0][1] = true;
+            obj[0][2] = false;
+            obj[1][0] = false;
+            obj[1][1] = true;
+            obj[1][2] = true;
             break;
         case 16:
-            bool obj[2][3] = {{{false}, {true}, {true}}, {{true}, {true}, {false}}};
+            x = 2;
+            y = 3;
+            obj[0][0] = false;
+            obj[0][1] = true;
+            obj[0][2] = true;
+            obj[1][0] = true;
+            obj[1][1] = true;
+            obj[1][2] = false;
             break;
         case 17:
-            bool obj[3][2] = {{{true}, {false}}, {{true}, {true}}, {{true}, {false}}};
+            x = 3;
+            y = 2;
+            obj[0][0] = true;
+            obj[0][1] = false;
+            obj[1][0] = true;
+            obj[1][1] = true;
+            obj[2][0] = true;
+            obj[2][1] = false;
             break;
         case 18:
-            bool obj[3][2] = {{{false}, {true}}, {{true}, {true}}, {{false}, {true}}};
+            x = 3;
+            y = 2;
+            obj[0][0] = false;
+            obj[0][1] = true;
+            obj[1][0] = true;
+            obj[1][1] = true;
+            obj[2][0] = false;
+            obj[2][1] = true;
             break;
         case 19:
-            bool obj[2][3] = {{{false}, {true}, {false}}, {{true}, {true}, {true}}};
+            x = 2;
+            y = 3;
+            obj[0][0] = false;
+            obj[0][1] = true;
+            obj[0][2] = false;
+            obj[1][0] = true;
+            obj[1][1] = true;
+            obj[1][2] = true;
             break;
         case 20:
-            bool obj[2][3] = {{{true}, {true}, {true}}, {{false}, {true}, {false}}};
+            x = 2;
+            y = 3;
+            obj[0][0] = true;
+            obj[0][1] = true;
+            obj[0][2] = true;
+            obj[1][0] = false;
+            obj[1][1] = true;
+            obj[1][2] = false;
             break;
         case 21:
-            bool obj[3][2] = {{{true}, {false}}, {{true}, {false}}, {{true}, {true}}};
+            x = 3;
+            y = 2;
+            obj[0][0] = true;
+            obj[0][1] = false;
+            obj[1][0] = true;
+            obj[1][1] = false;
+            obj[2][0] = true;
+            obj[2][1] = true;
             break;
         case 22:
-            bool obj[3][2] = {{{true}, {true}}, {{true}, {false}}, {{true}, {false}}};
+            x = 3;
+            y = 2;
+            obj[0][0] = true;
+            obj[0][1] = true;
+            obj[1][0] = true;
+            obj[1][1] = false;
+            obj[2][0] = true;
+            obj[2][1] = false;
             break;
         case 23:
-            bool obj[3][2] = {{{false}, {true}}, {{false}, {true}}, {{true}, {true}}};
+            x = 3;
+            y = 2;
+            obj[0][0] = false;
+            obj[0][1] = true;
+            obj[1][0] = false;
+            obj[1][1] = true;
+            obj[2][0] = true;
+            obj[2][1] = true;
             break;
         case 24:
-            bool obj[3][2] = {{{true}, {true}}, {{false}, {true}}, {{false}, {true}}};
+            x = 3;
+            y = 2;
+            obj[0][0] = true;
+            obj[0][1] = true;
+            obj[1][0] = false;
+            obj[1][1] = true;
+            obj[2][0] = false;
+            obj[2][1] = true;
             break;
         }
         int Y = 0;
