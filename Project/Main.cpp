@@ -1,6 +1,7 @@
 #include <iostream>
 #include <windows.h>
 #include <conio.h>
+#include <time.h>
 
 using namespace std;
 
@@ -26,29 +27,30 @@ class Game
 {
 private:
     // {{{},{},{}},{{},{},{}},{{},{},{}}},
-    bool easy_Single[3][3] = {{true, false, false}, {false, false, false}, {false, false, false}};
-    bool easy_Bar_1[3][3] = {{{true}, {true}, {false}}, {{false}, {false}, {false}}, {{false}, {false}, {false}}};
-    bool easy_Bar_2[3][3] = {{{true}, {false}, {false}}, {{true}, {false}, {false}}, {{false}, {false}, {false}}};
-    bool easy_Square[3][3] = {{{true}, {true}, {false}}, {{true}, {true}, {false}}, {{false}, {false}, {false}}};
-    bool Norm_L_1[3][3] = {{{false}, {true}, {false}}, {{true}, {true}, {false}}, {{false}, {false}, {false}}};
-    bool Norm_L_2[3][3] = {{{true}, {false}, {false}}, {{true}, {true}, {false}}, {{false}, {false}, {false}}};
-    bool Norm_L_3[3][3] = {{{true}, {true}, {false}}, {{false}, {true}, {false}}, {{false}, {false}, {false}}};
-    bool Norm_L_4[3][3] = {{{true}, {true}, {false}}, {{true}, {false}, {false}}, {{false}, {false}, {false}}};
-    bool Norm_Bar_3_1[3][3] = {{{true}, {false}, {false}}, {{true}, {false}, {false}}, {{true}, {false}, {false}}};
-    bool Norm_Bar_3_2[3][3] = {{{true}, {true}, {true}}, {{false}, {false}, {false}}, {{false}, {false}, {false}}};
-    bool Hard_LL_1[3][3] = {{{true}, {true}, {false}}, {{false}, {true}, {true}}, {{false}, {false}, {false}}};
-    bool Hard_LL_2[3][3] = {{{false}, {true}, {true}}, {{true}, {true}, {false}}, {{false}, {false}, {false}}};
-    bool Hard_LL_3[3][3] = {{{true}, {false}, {false}}, {{true}, {true}, {false}}, {{false}, {true}, {false}}};
-    bool Hard_LL_4[3][3] = {{{false}, {true}, {false}}, {{true}, {true}, {false}}, {{true}, {false}, {false}}};
-    bool Hard_T_1[3][3] = {{{true}, {true}, {true}}, {{false}, {true}, {false}}, {{false}, {false}, {false}}};
-    bool Hard_T_2[3][3] = {{{false}, {true}, {false}}, {{true}, {true}, {true}}, {{false}, {false}, {false}}};
-    bool Hard_T_3[3][3] = {{{false}, {true}, {false}}, {{true}, {true}, {false}}, {{false}, {true}, {false}}};
-    bool Hard_T_4[3][3] = {{{true}, {false}, {false}}, {{true}, {true}, {false}}, {{true}, {false}, {false}}};
-    bool Hard_L_1[3][3] = {{{true}, {true}, {true}}, {{true}, {false}, {false}}, {{false}, {false}, {false}}};
-    bool Hard_L_2[3][3] = {{{true}, {true}, {true}}, {{false}, {false}, {true}}, {{false}, {false}, {false}}};
-    bool Hard_L_3[3][3] = {{{true}, {false}, {false}}, {{true}, {true}, {true}}, {{false}, {false}, {false}}};
-    bool Hard_L_4[3][3] = {{{false}, {false}, {true}}, {{true}, {true}, {true}}, {{false}, {false}, {false}}};
-    bool Norm_Bar_4[4] = {true};
+    bool easy_Single[4][4] = {{true, false, false, false}, {false, false, false, false}, {false, false, false, false}, {false, false, false, false}};
+    bool easy_Bar_1[4][4] = {{true, true, false, false}, {false, false, false, false}, {false, false, false, false}, {false, false, false, false}};
+    bool easy_Bar_2[4][4] = {{true, false, false, false}, {true, false, false, false}, {false, false, false, false}, {false, false, false, false}};
+    bool easy_Square[4][4] = {{true, true, false, false}, {true, true, false, false}, {false, false, false, false}, {false, false, false, false}};
+    bool Norm_L_1[4][4] = {{false, true, false, false}, {true, true, false, false}, {false, false, false, false}, {false, false, false, false}};
+    bool Norm_L_2[4][4] = {{true, false, false, false}, {true, true, false, false}, {false, false, false, false}, {false, false, false, false}};
+    bool Norm_L_3[4][4] = {{true, true, false, false}, {false, true, false, false}, {false, false, false, false}, {false, false, false, false}};
+    bool Norm_L_4[4][4] = {{true, true, false, false}, {true, false, false, false}, {false, false, false, false}, {false, false, false, false}};
+    bool Norm_Bar_3_1[4][4] = {{true, false, false, false}, {true, false, false, false}, {true, false, false, false}, {false, false, false, false}};
+    bool Norm_Bar_3_2[4][4] = {{true, true, true, false}, {false, false, false, false}, {false, false, false, false}, {false, false, false, false}};
+    bool Hard_LL_1[4][4] = {{true, true, false, false}, {false, true, true, false}, {false, false, false, false}, {false, false, false, false}};
+    bool Hard_LL_2[4][4] = {{false, true, true, false}, {true, true, false, false}, {false, false, false, false}, {false, false, false, false}};
+    bool Hard_LL_3[4][4] = {{true, false, false, false}, {true, true, false, false}, {false, true, false, false}, {false, false, false, false}};
+    bool Hard_LL_4[4][4] = {{false, true, false, false}, {true, true, false, false}, {true, false, false, false}, {false, false, false, false}};
+    bool Hard_T_1[4][4] = {{true, true, true, false}, {false, true, false, false}, {false, false, false, false}, {false, false, false, false}};
+    bool Hard_T_2[4][4] = {{false, true, false, false}, {true, true, true, false}, {false, false, false, false}, {false, false, false, false}};
+    bool Hard_T_3[4][4] = {{false, true, false, false}, {true, true, false, false}, {false, true, false, false}, {false, false, false, false}};
+    bool Hard_T_4[4][4] = {{true, false, false, false}, {true, true, false, false}, {true, false, false, false}, {false, false, false, false}};
+    bool Hard_L_1[4][4] = {{true, true, true, false}, {true, false, false, false}, {false, false, false, false}, {false, false, false, false}};
+    bool Hard_L_2[4][4] = {{true, true, true, false}, {false, false, true, false}, {false, false, false, false}, {false, false, false, false}};
+    bool Hard_L_3[4][4] = {{true, false, false, false}, {true, true, true, false}, {false, false, false, false}, {false, false, false, false}};
+    bool Hard_L_4[4][4] = {{false, false, true, false}, {true, true, true, false}, {false, false, false, false}, {false, false, false, false}};
+    bool Hard_Bar_4_1[4][4] = {{true, true, true, true}, {false, false, false, false}, {false, false, false, false}, {false, false, false, false}};
+    bool Hard_Bar_4_2[4][4] = {{true, false, false, false}, {true, false, false, false}, {true, false, false, false}, {true, false, false, false}};
     bool Board[100][100] = {false};
 
 public:
@@ -176,7 +178,7 @@ public:
             set[counter - 1] = 116;
         }
     }
-    void change_Game_Board(int X, int x, int y, bool obj[3][3])
+    bool change_Game_Board(int X, int x, int y, bool obj[4][4])
     {
         int Y = 0;
         bool ok = false;
@@ -201,6 +203,10 @@ public:
             }
             if (ok)
             {
+                if (i < y)
+                {
+                    return false;
+                }
                 for (int j = i; j >= 0; j--)
                 {
                     if (Board[X][j] || Board[X][j])
@@ -221,28 +227,112 @@ public:
         {
             for (int k = 0; k < x; k++)
             {
-                Board[X + k][Y + i] = obj[k][i];
+                if(obj[k][i])
+                    Board[X + k][Y + i] = true;
             }
         }
         Render_Game_Board();
+        return true;
     }
-    void play()
+    void Do(int cor, int mod)
     {
-        change_Game_Board(3, 2, 2, Norm_L_2);
-
-        char cnt = _getch();
-        change_Game_Board(3, 2, 1, easy_Bar_2);
+        switch (mod)
+        {
+        case 1:
+            change_Game_Board(cor, 1, 1, easy_Single);
+            break;
+        case 2:
+            change_Game_Board(cor, 2, 1, easy_Bar_2);
+            break;
+        case 3:
+            change_Game_Board(cor, 1, 2, easy_Bar_1);
+            break;
+        case 4:
+            change_Game_Board(cor, 2, 2, easy_Square);
+            break;
+        case 5:
+            change_Game_Board(cor, 2, 2, Norm_L_1);
+            break;
+        case 6:
+            change_Game_Board(cor, 2, 2, Norm_L_2);
+            break;
+        case 7:
+            change_Game_Board(cor, 2, 2, Norm_L_3);
+            break;
+        case 8:
+            change_Game_Board(cor, 2, 2, Norm_L_4);
+            break;
+        case 9:
+            change_Game_Board(cor, 3, 1, Norm_Bar_3_1);
+            break;
+        case 10:
+            change_Game_Board(cor, 1, 3, Norm_Bar_3_2);
+            break;
+        case 11:
+            change_Game_Board(cor, 2, 3, Hard_LL_1);
+            break;
+        case 12:
+            change_Game_Board(cor, 2, 3, Hard_LL_2);
+            break;
+        case 13:
+            change_Game_Board(cor, 3, 2, Hard_LL_3);
+            break;
+        case 14:
+            change_Game_Board(cor, 3, 2, Hard_LL_4);
+            break;
+        case 15:
+            change_Game_Board(cor, 2, 3, Hard_L_1);
+            break;
+        case 16:
+            change_Game_Board(cor, 2, 3, Hard_L_2);
+            break;
+        case 17:
+            change_Game_Board(cor, 2, 3, Hard_L_3);
+            break;
+        case 18:
+            change_Game_Board(cor, 2, 3, Hard_L_4);
+            break;
+        case 19:
+            change_Game_Board(cor, 2, 3, Hard_T_1);
+            break;
+        case 20:
+            change_Game_Board(cor, 2, 3, Hard_T_2);
+            break;
+        case 21:
+            change_Game_Board(cor, 3, 2, Hard_T_3);
+            break;
+        case 22:
+            change_Game_Board(cor, 3, 2, Hard_T_4);
+            break;
+        case 23:
+            change_Game_Board(cor, 1, 4, Hard_Bar_4_1);
+            break;
+        case 24:
+            change_Game_Board(cor, 4, 1, Hard_Bar_4_2);
+            break;
+        }
+        return;
     }
 };
 
 int main()
 {
     Game game;
+    // srand(time(0));
     game.start_menu();
     system("cls");
     game.Make_Game_Borad();
     char keyz = _getch();
-    game.play();
+    // int x = 0, rnd = 0;
+    game.Do(5, 2);
+    keyz = _getch();
+    game.Do(5, 12);
+    keyz = _getch();
+    game.Do(4, 14);
+    keyz = _getch();
+    game.Do(5, 21);
+    keyz = _getch();
+    game.Do(5, 24);
     keyz = _getch();
     return 0;
 }
