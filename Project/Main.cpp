@@ -331,6 +331,8 @@ public:
             }
             Score += 10;
         }
+        if (f)
+            return Row_Checker();        
         Render_Game_Board();
     }
 };
