@@ -52,6 +52,7 @@ private:
     bool Hard_Bar_4_1[4][4] = {{true, true, true, true}, {false, false, false, false}, {false, false, false, false}, {false, false, false, false}};
     bool Hard_Bar_4_2[4][4] = {{true, false, false, false}, {true, false, false, false}, {true, false, false, false}, {true, false, false, false}};
     bool Board[100][100] = {false};
+    unsigned int Score = 0;
 
 public:
     void Render_Game_Board()
@@ -294,26 +295,52 @@ public:
         }
         return;
     }
+    void Row_Checker()
+    {
+        bool f = true;
+        int y = 0;
+        for (int i = 0; i < boardsize; i++)
+        {
+            f = true;
+            for (int j = 0; j < boardsize; j++)
+            {
+                if (!Board[j][i])
+                {
+                    f = false;
+                    break;
+                }
+            }
+            if (f)
+            {
+                y = i;
+                break;
+            }
+        }
+        if (f)
+        {
+            for (int i = y; i > 0; i--)
+            {
+                for (int j = 0; j < boardsize; j++)
+                {
+                    Board[j][i] = Board[j][i - 1];
+                }
+            }
+            for (int j = 0; j < boardsize; j++)
+            {
+                Board[j][0] = false;
+            }
+            Score += 10;
+        }
+        Render_Game_Board();
+    }
 };
 
 int main()
 {
     Game game;
-    // srand(time(0));
     game.start_menu();
     system("cls");
     game.Make_Game_Borad();
-    char keyz = _getch();
-    // int x = 0, rnd = 0;
-    game.Do(5, 2);
-    keyz = _getch();
-    game.Do(5, 12);
-    keyz = _getch();
-    game.Do(4, 14);
-    keyz = _getch();
-    game.Do(5, 21);
-    keyz = _getch();
-    game.Do(5, 24);
-    keyz = _getch();
+    game.Row_Checker();
     return 0;
 }
