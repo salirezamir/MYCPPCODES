@@ -70,7 +70,7 @@ void start_menu()
         cout << "Exit";
         ConClr(7);
         key = _getch();
-        if (key == '\r')
+        if (key == 13)
         {
             if (counter == 1)
             {
@@ -126,6 +126,21 @@ void start_menu()
         set[counter - 1] = 116;
     }
 }
+
+class Game
+{
+private:
+    const bool easy_Single[1] = {true};
+    const bool easy_Bar[2] = {true};
+    const bool easy_Square[2][2] = {true};
+    const bool Norm_L[4][2][2] = {{{{false}, {true}}, {{true}, {true}}}, {{{true}, {false}}, {{true}, {true}}}, {{{true}, {true}}, {{false}, {true}}}, {{{true}, {true}}, {{true}, {false}}}};
+    const bool Norm_Bar_3[3] = {true};
+    const bool Norm_Bar_4[4] = {true};
+    const bool Hard_LL[2][3][2] = {{{{true}, {false}}, {{true}, {true}}, {{false}, {true}}}, {{{false}, {true}}, {{true}, {true}}, {{true}, {false}}}};
+    const bool Hard_T[2][2][3] = {{{{true}, {true}, {true}}, {{false}, {true}, {false}}}, {{{false}, {true}, {false}}, {{true}, {true}, {true}}}};
+    const bool Hard_L[4][2][3] = {{{{true},{true},{true}},{{true},{false},{false}}},{{{true},{true},{true}},{{false},{false},{true}}},{{{true},{false},{false}},{{true},{true},{true}}},{{{false},{false},{true}},{{true},{true},{true}}}};
+    
+};
 
 int main()
 {
