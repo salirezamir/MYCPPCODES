@@ -627,7 +627,6 @@ public:
     }
     void Play()
     {
-        Game_Over();
         system("cls");
         Make_Game_Borad();
         srand(time(0));
