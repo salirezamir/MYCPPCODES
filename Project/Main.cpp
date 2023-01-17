@@ -70,6 +70,7 @@ private:
             }
         }
     }
+
     void Copy_Board_To_Tmp()
     {
         for (int i = 0; i < boardsize; i++)
@@ -77,6 +78,78 @@ private:
             for (int j = 0; j < boardsize; j++)
                 Tmp[i][j] = Board[i][j];
         }
+    }
+    void Clear_a_Row()
+    {
+        for (int i = 0; i < boardsize; i++)
+        {
+            for (int j = 0; j < boardsize; j++)
+            {
+                if (Board[j][i])
+                {
+                    for (int k = 0; k < boardsize; k++)
+                    {
+                        Board[k][i] = false;
+                    }
+                    return;
+                }
+            }
+        }
+    }
+    void Game_Over()
+    {
+        system("cls");
+        ConXY(36, 0);
+        ConClr(4);
+        cout << "   ><<<<         ><       ><<       ><<><<<<<<<<         ><<<<     ><<         ><<><<<<<<<<><<<<<<<    \n ><    ><<      >< <<     >< ><<   ><<<><<             ><<    ><<   ><<       ><< ><<      ><<    ><<  \n><<            ><  ><<    ><< ><< > ><<><<           ><<        ><<  ><<     ><<  ><<      ><<    ><<  \n><<           ><<   ><<   ><<  ><<  ><<><<<<<<       ><<        ><<   ><<   ><<   ><<<<<<  >< ><<      \n><<   ><<<<  ><<<<<< ><<  ><<   ><  ><<><<           ><<        ><<    ><< ><<    ><<      ><<  ><<    \n ><<    ><  ><<       ><< ><<       ><<><<             ><<     ><<      ><<<<     ><<      ><<    ><<  \n  ><<<<<   ><<         ><<><<       ><<><<<<<<<<         ><<<<           ><<      ><<<<<<<<><<      ><<";
+        int set[2] = {116, 7};
+        int X = 50;
+        int Y = 10;
+        ConXY(X, Y + 6);
+        ConClr(4);
+        cout << "High Score : " << HighScore;
+        int counter = 1;
+        char key;
+        char keyz;
+        while (true)
+        {
+            ConXY(X, Y);
+            ConClr(set[0]);
+            cout << "Retry";
+            ConXY(X, Y + 2);
+            ConClr(set[1]);
+            cout << "Exit";
+            ConClr(7);
+            key = _getch();
+            if (key == 13)
+            {
+                if (counter == 1)
+                {
+                    for (int i = 0; i < boardsize; i++)
+                    {
+                        for (int j = 0; j < boardsize; j++)
+                            Board[i][j] = false;
+                    }
+                    return;
+                }
+                if (counter == 2)
+                {
+                    system("cls");
+                    exit(0);
+                }
+            }
+        }
+        if (key == -32)
+        {
+            keyz = _getch();
+            if (keyz == 72 && counter >= 2)
+                counter--;
+            if (keyz == 80 && counter <= 1)
+                counter++;
+        }
+        set[0] = 7;
+        set[1] = 7;
+        set[counter - 1] = 116;
     }
 
 public:
@@ -190,7 +263,7 @@ public:
             set[counter - 1] = 116;
         }
     }
-    bool change_Game_Board(int X, int x, int y, bool obj[4][4])
+    void change_Game_Board(int X, int x, int y, bool obj[4][4])
     {
         int Y = -1;
         for (int i = 0; i <= boardsize - y; i++)
@@ -213,8 +286,8 @@ public:
             }
             if (Y > 0)
                 break;
-            if (Y < 0 && i == boardsize - y)
-                return false;
+            // if (Y < 0 && i == boardsize - y)
+            //     return false;
         }
         if (Y == -1)
             Y = boardsize - y;
@@ -227,7 +300,7 @@ public:
             }
         }
         Render_Game_Board(Board);
-        return true;
+        return;
     }
     void Do(int cor, int mod)
     {
@@ -306,6 +379,7 @@ public:
             change_Game_Board(cor, 4, 1, Hard_Bar_4_2);
             break;
         }
+        cord = 0;
         return;
     }
     void Row_Checker()
@@ -348,16 +422,16 @@ public:
             return Row_Checker();
         Render_Game_Board(Board);
     }
-    void Move(int cor, bool right, int x, bool obj[4][4])
+    bool Move(int cor, bool right, int x, bool obj[4][4])
     {
         if (right)
             cor++;
         else
             cor--;
         if (right && cor + x > boardsize)
-            return;
+            return false;
         if (!right && cor < 0)
-            return;
+            return true;
         Copy_Board_To_Tmp();
         for (int i = 0; i < x; i++)
         {
@@ -365,7 +439,7 @@ public:
             {
                 if (obj[i][j])
                 {
-                    if (Tmp[i + cord][j])
+                    if (Tmp[i + cor][j])
                     {
                         if (right)
                             cor++;
@@ -373,91 +447,293 @@ public:
                             cor--;
                         return Move(cor, right, x, obj);
                     }
-                    Tmp[i + cord][j] = true;
+                    Tmp[i + cor][j] = true;
                 }
             }
         }
-        Render_Game_Board(Tmp);
         cord = cor;
+        Render_Game_Board(Tmp);
+        return true;
     }
-    void Move_mod(int mod, bool R)
+    bool Move_mod(int mod, bool R)
     {
         switch (mod)
         {
         case 1:
-            Move(cord, R, 1, easy_Single);
+            return Move(cord, R, 1, easy_Single);
             break;
         case 2:
-            Move(cord, R, 2, easy_Bar_2);
+            return Move(cord, R, 2, easy_Bar_2);
             break;
         case 3:
-            Move(cord, R, 1, easy_Bar_1);
+            return Move(cord, R, 1, easy_Bar_1);
             break;
         case 4:
-            Move(cord, R, 2, easy_Square);
+            return Move(cord, R, 2, easy_Square);
             break;
         case 5:
-            Move(cord, R, 2, Norm_L_1);
+            return Move(cord, R, 2, Norm_L_1);
             break;
         case 6:
-            Move(cord, R, 2, Norm_L_2);
+            return Move(cord, R, 2, Norm_L_2);
             break;
         case 7:
-            Move(cord, R, 2, Norm_L_3);
+            return Move(cord, R, 2, Norm_L_3);
             break;
         case 8:
-            Move(cord, R, 2, Norm_L_4);
+            return Move(cord, R, 2, Norm_L_4);
             break;
         case 9:
-            Move(cord, R, 3, Norm_Bar_3_1);
+            return Move(cord, R, 3, Norm_Bar_3_1);
             break;
         case 10:
-            Move(cord, R, 1, Norm_Bar_3_2);
+            return Move(cord, R, 1, Norm_Bar_3_2);
             break;
         case 11:
-            Move(cord, R, 2, Hard_LL_1);
+            return Move(cord, R, 2, Hard_LL_1);
             break;
         case 12:
-            Move(cord, R, 2, Hard_LL_2);
+            return Move(cord, R, 2, Hard_LL_2);
             break;
         case 13:
-            Move(cord, R, 3, Hard_LL_3);
+            return Move(cord, R, 3, Hard_LL_3);
             break;
         case 14:
-            Move(cord, R, 3, Hard_LL_4);
+            return Move(cord, R, 3, Hard_LL_4);
             break;
         case 15:
-            Move(cord, R, 2, Hard_L_1);
+            return Move(cord, R, 2, Hard_L_1);
             break;
         case 16:
-            Move(cord, R, 2, Hard_L_2);
+            return Move(cord, R, 2, Hard_L_2);
             break;
         case 17:
-            Move(cord, R, 2, Hard_L_3);
+            return Move(cord, R, 2, Hard_L_3);
             break;
         case 18:
-            Move(cord, R, 2, Hard_L_4);
+            return Move(cord, R, 2, Hard_L_4);
             break;
         case 19:
-            Move(cord, R, 2, Hard_T_1);
+            return Move(cord, R, 2, Hard_T_1);
             break;
         case 20:
-            Move(cord, R, 2, Hard_T_2);
+            return Move(cord, R, 2, Hard_T_2);
             break;
         case 21:
-            Move(cord, R, 3, Hard_T_3);
+            return Move(cord, R, 3, Hard_T_3);
             break;
         case 22:
-            Move(cord, R, 3, Hard_T_4);
+            return Move(cord, R, 3, Hard_T_4);
             break;
         case 23:
-            Move(cord, R, 1, Hard_Bar_4_1);
+            return Move(cord, R, 1, Hard_Bar_4_1);
             break;
         case 24:
-            Move(cord, R, 4, Hard_Bar_4_2);
+            return Move(cord, R, 4, Hard_Bar_4_2);
             break;
         }
-    
+        return false;
+    }
+    void Next_Block(int x, int y, bool obj[4][4])
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            ConXY(x, y + i);
+            for (int j = 0; j < 4; j++)
+            {
+                if (obj[j][i])
+                    cout << '#';
+                else
+                    cout << ' ';
+            }
+        }
+    }
+    void Next_mod(int x, int y, int mod)
+    {
+        switch (mod)
+        {
+        case 1:
+            return Next_Block(x, y, easy_Single);
+            break;
+        case 2:
+            return Next_Block(x, y, easy_Bar_2);
+            break;
+        case 3:
+            return Next_Block(x, y, easy_Bar_1);
+            break;
+        case 4:
+            return Next_Block(x, y, easy_Square);
+            break;
+        case 5:
+            return Next_Block(x, y, Norm_L_1);
+            break;
+        case 6:
+            return Next_Block(x, y, Norm_L_2);
+            break;
+        case 7:
+            return Next_Block(x, y, Norm_L_3);
+            break;
+        case 8:
+            return Next_Block(x, y, Norm_L_4);
+            break;
+        case 9:
+            return Next_Block(x, y, Norm_Bar_3_1);
+            break;
+        case 10:
+            return Next_Block(x, y, Norm_Bar_3_2);
+            break;
+        case 11:
+            return Next_Block(x, y, Hard_LL_1);
+            break;
+        case 12:
+            return Next_Block(x, y, Hard_LL_2);
+            break;
+        case 13:
+            return Next_Block(x, y, Hard_LL_3);
+            break;
+        case 14:
+            return Next_Block(x, y, Hard_LL_4);
+            break;
+        case 15:
+            return Next_Block(x, y, Hard_L_1);
+            break;
+        case 16:
+            return Next_Block(x, y, Hard_L_2);
+            break;
+        case 17:
+            return Next_Block(x, y, Hard_L_3);
+            break;
+        case 18:
+            return Next_Block(x, y, Hard_L_4);
+            break;
+        case 19:
+            return Next_Block(x, y, Hard_T_1);
+            break;
+        case 20:
+            return Next_Block(x, y, Hard_T_2);
+            break;
+        case 21:
+            return Next_Block(x, y, Hard_T_3);
+            break;
+        case 22:
+            return Next_Block(x, y, Hard_T_4);
+            break;
+        case 23:
+            return Next_Block(x, y, Hard_Bar_4_1);
+            break;
+        case 24:
+            return Next_Block(x, y, Hard_Bar_4_2);
+            break;
+        }
+    }
+    void Play()
+    {
+        system("cls");
+        Make_Game_Borad();
+        srand(time(0));
+        Score = 0;
+        int set[4] = {116, 7, 7, 0};
+        int mod = rand() % 24;
+        int nmod = rand() % 24;
+        int X = 6 + 5 * boardsize / 2;
+        int Y = boardsize / 2;
+        ConClr(95);
+        ConXY(X - 5, Y);
+        cout << "Next";
+        Next_mod(X - 5, Y, nmod);
+        ConClr(7);
+        cord = -1;
+        Move_mod(mod, true);
+        int counter = 1;
+        char key;
+        char keyz;
+        while (true)
+        {
+            ConXY(X, Y);
+            ConClr(set[0]);
+            cout << "Retry";
+            ConXY(X, Y + 1);
+            ConClr(set[1]);
+            cout << "Hint";
+            ConXY(X, Y + 2);
+            ConClr(set[2]);
+            cout << "Exit";
+            ConXY(X, Y + 3);
+            ConClr(set[3]);
+            cout << "Clear a row";
+            ConClr(7);
+            ConXY(X, Y + 4);
+            cout << "High SCORE : " << HighScore;
+            ConXY(X, Y + 5);
+            cout << "SCORE : " << Score;
+            key = _getch();
+            if (key == 13)
+            {
+                if (counter == 1)
+                {
+                    if (HighScore < Score)
+                        HighScore = Score;
+                    return Play();
+                }
+                if (counter == 2)
+                {
+                }
+                if (counter == 3)
+                {
+                    system("cls");
+                    exit(0);
+                }
+                if (counter == 4)
+                {
+                    Score -= 50;
+                    Clear_a_Row();
+                    if (Score < 50)
+                        counter--;
+                }
+            }
+            if (key == -32)
+            {
+                keyz = _getch();
+                if (keyz == 72 && counter > 1)
+                    counter--;
+                if (keyz == 80 && ((Score >= 50 && counter < 4) || (counter < 3)))
+                {
+                    counter++;
+                }
+            }
+            if (key == 97)
+                Move_mod(mod, false);
+            if (key == 100)
+                Move_mod(mod, true);
+            if (key == 115)
+            {
+                Do(cord, mod);
+                Row_Checker();
+                cord = -1;
+                mod = nmod;
+                nmod = rand() % 24;
+                ConXY(X - 5, Y);
+                ConClr(95);
+                Next_mod(X - 5, Y, nmod);
+                ConClr(7);
+                if (!Move_mod(mod, true))
+                {
+                    if (HighScore < Score)
+                        HighScore = Score;
+                    Game_Over();
+                    break;
+                }
+            }
+            set[0] = 7;
+            set[1] = 7;
+            set[2] = 7;
+            if (Score >= 50)
+                set[3] = 43;
+            else
+                set[3] = 0;
+            set[counter - 1] = 116;
+        }
+        return Play();
     }
 };
 
@@ -465,8 +741,6 @@ int main()
 {
     Game game;
     game.start_menu();
-    system("cls");
-    game.Make_Game_Borad();
-    char keys = _getch();
+    game.Play();
     return 0;
 }
