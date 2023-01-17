@@ -5,9 +5,6 @@
 
 using namespace std;
 
-int boardsize = 11;
-int HighScore = 0;
-
 void ConXY(int x, int y)
 {
     COORD coord;
@@ -26,7 +23,6 @@ void ConClr(int clr)
 class Game
 {
 private:
-    // {{{},{},{}},{{},{},{}},{{},{},{}}},
     bool easy_Single[4][4] = {{true, false, false, false}, {false, false, false, false}, {false, false, false, false}, {false, false, false, false}};
     bool easy_Bar_1[4][4] = {{true, true, false, false}, {false, false, false, false}, {false, false, false, false}, {false, false, false, false}};
     bool easy_Bar_2[4][4] = {{true, false, false, false}, {true, false, false, false}, {false, false, false, false}, {false, false, false, false}};
@@ -55,6 +51,8 @@ private:
     bool Tmp[100][100] = {false};
     int cord = 0;
     unsigned int Score = 0;
+    unsigned int boardsize = 11;
+    unsigned int HighScore = 0;
 
     void Render_Game_Board(bool board[100][100])
     {
@@ -153,6 +151,57 @@ private:
         }
     }
 
+    void Hint(int x, int y)
+    {
+        ConClr(226);
+        ConXY(x, y);
+        cout << "UP & DOWN ARROW : SELECTING ITEMS IN MENU";
+        ConXY(x, y + 1);
+        cout << "         A : MOVE BLOCK TO LEFT          ";
+        ConXY(x, y + 2);
+        cout << "         D : MOVE BLOCK TO RIGHT         ";
+        ConXY(x, y + 3);
+        cout << "         S : FALL DOWN THE BLOCK         ";
+        ConXY(x, y + 4);
+        cout << "                                         ";
+        ConXY(x, y + 5);
+        cout << "        PRESS ANY KEY TO CONTINUE        ";
+        ConClr(7);
+        _getch();
+        for (int i = 0; i < 6; i++)
+        {
+            ConXY(x, y + i);
+            cout << "                                         ";
+        }
+    }
+    void High_Score(int x, int y)
+    {
+        ConClr(186);
+        ConXY(x, y);
+        cout << "  _____  ______ _____ ____  _____  _____  _  ";
+        ConXY(x, y + 1);
+        cout << " |  __ \\|  ____/ ____/ __ \\|  __ \\|  __ \\| | ";
+        ConXY(x, y + 2);
+        cout << " | |__) | |__ | |   | |  | | |__) | |  | | | ";
+        ConXY(x, y + 3);
+        cout << " |  _  /|  __|| |   | |  | |  _  /| |  | | | ";
+        ConXY(x, y + 4);
+        cout << " | | \\ \\| |___| |___| |__| | | \\ \\| |__| |_| ";
+        ConXY(x, y + 5);
+        cout << " |_|  \\_\\______\\_____\\____/|_|  \\_\\_____/(_) ";
+        ConXY(x, y + 6);
+        cout << "                                             ";
+        ConXY(x, y + 7);
+        cout << "          PRESS ANY KEY TO CONTINUE          ";
+        ConClr(7);
+        _getch();
+        for (int i = 0; i < 8; i++)
+        {
+            ConXY(x, y + i);
+            cout << "                                             ";
+        }
+    }
+
 public:
     void Make_Game_Borad()
     {
@@ -165,10 +214,10 @@ public:
             cout << " ";
             ConXY(2 * i, boardsize + 1);
             cout << "  ";
-            ConXY(2 * boardsize + 1, i + 1);
+            ConXY(2 * (boardsize + 1), i + 1);
             cout << " ";
         }
-        ConXY(2 * boardsize + 1, 0);
+        ConXY(2 * boardsize + 2, 0);
         cout << " ";
         ConClr(7);
         for (int i = 0; i < boardsize; i++)
@@ -278,7 +327,16 @@ public:
                         if (Board[X + k][i + j])
                         {
                             Y = i - 1;
-                            break;
+                            for (int i = 0; i < y; i++)
+                            {
+                                for (int k = 0; k < x; k++)
+                                {
+                                    if (obj[k][i])
+                                        Board[X + k][Y + i] = true;
+                                }
+                            }
+                            Render_Game_Board(Board);
+                            return;
                         }
                     }
                 }
@@ -286,19 +344,21 @@ public:
                     break;
             }
             if (Y > 0)
-                i = boardsize - y + 5;
+                break;
         }
         if (Y == -1)
-            Y = boardsize - y;
-        for (int i = 0; i < y; i++)
         {
-            for (int k = 0; k < x; k++)
+            Y = boardsize - y;
+            for (int i = 0; i < y; i++)
             {
-                if (obj[k][i])
-                    Board[X + k][Y + i] = true;
+                for (int k = 0; k < x; k++)
+                {
+                    if (obj[k][i])
+                        Board[X + k][Y + i] = true;
+                }
             }
+            Render_Game_Board(Board);
         }
-        Render_Game_Board(Board);
         return;
     }
     void Do(int cor, int mod)
@@ -383,26 +443,44 @@ public:
     }
     void Row_Checker()
     {
-        bool f = true;
+        bool f[2];
         int y = 0;
+        int x = 0;
         for (int i = 0; i < boardsize; i++)
         {
-            f = true;
+            f[0] = true;
             for (int j = 0; j < boardsize; j++)
             {
                 if (!Board[j][i])
                 {
-                    f = false;
+                    f[0] = false;
                     break;
                 }
             }
-            if (f)
+            if (f[0])
             {
                 y = i;
                 break;
             }
         }
-        if (f)
+        for (int i = 0; i < boardsize; i++)
+        {
+            f[1] = true;
+            for (int j = 0; j < boardsize; j++)
+            {
+                if (!Board[i][j])
+                {
+                    f[1] = false;
+                    break;
+                }
+            }
+            if (f[1])
+            {
+                x = i;
+                break;
+            }
+        }
+        if (f[0])
         {
             for (int i = y; i > 0; i--)
             {
@@ -416,9 +494,24 @@ public:
                 Board[j][0] = false;
             }
             Score += 10;
-        }
-        if (f)
             return Row_Checker();
+        }
+        if (f[1])
+        {
+            for (int i = x; i < boardsize - 1; i++)
+            {
+                for (int j = 0; j < boardsize; j++)
+                {
+                    Board[i][j] = Board[i + 1][j];
+                }
+            }
+            for (int j = 0; j < boardsize; j++)
+            {
+                Board[boardsize - 1][j] = false;
+            }
+            Score += 10;
+            return Row_Checker();
+        }
         Render_Game_Board(Board);
     }
     bool Move(int cor, bool right, int x, bool obj[4][4])
@@ -635,19 +728,29 @@ public:
         int mod = 1 + rand() % 24;
         int nmod = 1 + rand() % 24;
         int X = 6 + 5 * boardsize / 2;
-        int Y = boardsize / 2;
+        int Y = -1 + boardsize / 2;
         ConClr(95);
-        ConXY(X - 5, Y);
+        ConXY(X - 6, Y - 1);
         cout << "Next";
-        Next_mod(X - 5, Y, nmod);
+        Next_mod(X - 6, Y, nmod);
         ConClr(7);
         cord = -1;
         Move_mod(mod, true);
         int counter = 1;
         char key;
         char keyz;
+        bool high = false;
         while (true)
         {
+            if (Score > HighScore)
+            {
+                if (!high)
+                {
+                    High_Score(X, Y);
+                    high = false;
+                }
+                HighScore = Score;
+            }
             ConXY(X, Y);
             ConClr(set[0]);
             cout << "Retry";
@@ -681,6 +784,7 @@ public:
                 }
                 if (counter == 2)
                 {
+                    Hint(X, Y);
                 }
                 if (counter == 3)
                 {
@@ -705,20 +809,19 @@ public:
                     counter++;
                 }
             }
-            if (key == 97)
+            if (key == 'a' || key == 'A')
                 Move_mod(mod, false);
-            if (key == 100)
+            if (key == 'd' || key == 'd')
                 Move_mod(mod, true);
-            if (key == 115)
+            if (key == 's' || key == 'S')
             {
                 Do(cord, mod);
                 Row_Checker();
                 cord = -1;
                 mod = nmod;
                 nmod = 1 + rand() % 24;
-                ConXY(X - 5, Y);
                 ConClr(95);
-                Next_mod(X - 5, Y, nmod);
+                Next_mod(X - 6, Y, nmod);
                 ConClr(7);
                 if (!Move_mod(mod, true))
                 {
