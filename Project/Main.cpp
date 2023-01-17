@@ -53,7 +53,28 @@ private:
     unsigned int Score = 0;
     unsigned int boardsize = 11;
     unsigned int HighScore = 0;
+    int diff[3] = {1, 1, 1};
 
+    int Round_up(double in)
+    {
+        if (in == int(in))
+            return in;
+        return (1 + in);
+    }
+
+    int RndSel()
+    {
+        srand(time(0));
+        int asd = 4 * diff[0] + 6 * diff[1] + 12 * diff[2];
+        int opt = 1 + (rand() % asd);
+        if (opt <= 4 * diff[0])
+            return Round_up(opt / diff[0]);
+        opt -= 4 * diff[0];
+        if (opt <= 6 * diff[1])
+            return Round_up(4 + (opt / diff[1]));
+        opt -= 6 * diff[2];
+        return Round_up(10 + (opt / diff[2]));
+    }
     void Render_Game_Board(bool board[100][100])
     {
         for (int i = 0; i < boardsize; i++)
@@ -202,7 +223,6 @@ private:
         }
     }
 
-public:
     void Make_Game_Borad()
     {
         ConClr(238);
@@ -227,90 +247,6 @@ public:
                 ConXY(2 * i + 2, j + 1);
                 cout << "-";
             }
-        }
-    }
-
-    void start_menu()
-    {
-        system("cls");
-        cout << "oooooooooo o888                        oooo         oooooooooo                                      o888             \n 888    888 888   ooooooo     ooooooo   888  ooooo   888    888 oooo  oooo  ooooooooooo ooooooooooo  888  ooooooooo8 \n 888oooo88  888 888     888 888     888 888o888      888oooo88   888   888       8888        8888    888 888oooooo8  \n 888    888 888 888     888 888         8888 88o     888         888   888    8888        8888       888 888         \no888ooo888 o888o  88ooo88     88ooo888 o888o o888o  o888o         888o88 8o o888ooooooo o888ooooooo o888o  88oooo888 \n ";
-        int set[3] = {116, 7, 7};
-        int X = 50;
-        int Y = 10;
-        int counter = 1;
-        char key;
-        char keyz;
-        while (true)
-        {
-            ConXY(X + 6, Y);
-            ConClr(set[0]);
-            cout << "START";
-            ConXY(X, Y + 1);
-            ConClr(set[1]);
-            cout << "Select Difficulty";
-            ConXY(X + 6, Y + 2);
-            ConClr(set[2]);
-            cout << "Exit";
-            ConClr(7);
-            key = _getch();
-            if (key == 13)
-            {
-                if (counter == 1)
-                {
-                    system("cls");
-                    return;
-                }
-                if (counter == 2)
-                {
-                    ConXY(X - 6, Y + 5);
-                    ConClr(12);
-                    cout << "Note That the minimal input is 11";
-                    ConXY(X - 3, Y + 6);
-                    ConClr(6);
-                    cout << "Please insert grids number : ";
-                    ConClr(0);
-                    cin >> boardsize;
-                    ConXY(X - 6, Y + 6);
-                    cout << "                                               ";
-                    ConXY(X - 6, Y + 5);
-                    cout << "                                               ";
-                    if (boardsize < 11)
-                    {
-                        boardsize = 11;
-                        ConXY(X - 3, Y + 5);
-                        ConClr(70);
-                        cout << "THE INPUT IS NOT VALID";
-                        ConXY(X - 4, Y + 7);
-                        ConClr(100);
-                        cout << "PRESS ANY KEY TO CONTINUE";
-                        ConClr(0);
-                        keyz = _getch();
-                        ConXY(X - 3, Y + 5);
-                        cout << "                                               ";
-                        ConXY(X - 4, Y + 7);
-                        cout << "                                               ";
-                        ConClr(7);
-                    }
-                }
-                if (counter == 3)
-                {
-
-                    system("cls");
-                    exit(0);
-                }
-            }
-            if (key == -32)
-            {
-                keyz = _getch();
-                if (keyz == 72 && counter != 1)
-                    counter--;
-                if (keyz == 80 && counter != 3)
-                    counter++;
-            }
-            set[0] = 7;
-            set[1] = 7;
-            set[2] = 7;
-            set[counter - 1] = 116;
         }
     }
     void change_Game_Board(int X, int x, int y, bool obj[4][4])
@@ -718,15 +654,100 @@ public:
             break;
         }
     }
+
+public:
+    void start_menu()
+    {
+        system("cls");
+        cout << "oooooooooo o888                        oooo         oooooooooo                                      o888             \n 888    888 888   ooooooo     ooooooo   888  ooooo   888    888 oooo  oooo  ooooooooooo ooooooooooo  888  ooooooooo8 \n 888oooo88  888 888     888 888     888 888o888      888oooo88   888   888       8888        8888    888 888oooooo8  \n 888    888 888 888     888 888         8888 88o     888         888   888    8888        8888       888 888         \no888ooo888 o888o  88ooo88     88ooo888 o888o o888o  o888o         888o88 8o o888ooooooo o888ooooooo o888o  88oooo888 \n ";
+        int set[3] = {116, 7, 7};
+        int X = 50;
+        int Y = 10;
+        int counter = 1;
+        char key;
+        char keyz;
+        while (true)
+        {
+            ConXY(X + 6, Y);
+            ConClr(set[0]);
+            cout << "START";
+            ConXY(X, Y + 1);
+            ConClr(set[1]);
+            cout << "Select Difficulty";
+            ConXY(X + 6, Y + 2);
+            ConClr(set[2]);
+            cout << "Exit";
+            ConClr(7);
+            key = _getch();
+            if (key == 13)
+            {
+                if (counter == 1)
+                {
+                    system("cls");
+                    return;
+                }
+                if (counter == 2)
+                {
+                    ConXY(X - 6, Y + 5);
+                    ConClr(12);
+                    cout << "Note That the minimal input is 11";
+                    ConXY(X - 3, Y + 6);
+                    ConClr(6);
+                    cout << "Please insert grids number : ";
+                    ConClr(0);
+                    cin >> boardsize;
+                    ConXY(X - 6, Y + 6);
+                    cout << "                                               ";
+                    ConXY(X - 6, Y + 5);
+                    cout << "                                               ";
+                    if (boardsize < 11)
+                    {
+                        boardsize = 11;
+                        ConXY(X - 3, Y + 5);
+                        ConClr(70);
+                        cout << "THE INPUT IS NOT VALID";
+                        ConXY(X - 4, Y + 7);
+                        ConClr(100);
+                        cout << "PRESS ANY KEY TO CONTINUE";
+                        ConClr(0);
+                        keyz = _getch();
+                        ConXY(X - 3, Y + 5);
+                        cout << "                                               ";
+                        ConXY(X - 4, Y + 7);
+                        cout << "                                               ";
+                        ConClr(7);
+                    }
+                }
+                if (counter == 3)
+                {
+
+                    system("cls");
+                    exit(0);
+                }
+            }
+            if (key == -32)
+            {
+                keyz = _getch();
+                if (keyz == 72 && counter != 1)
+                    counter--;
+                if (keyz == 80 && counter != 3)
+                    counter++;
+            }
+            set[0] = 7;
+            set[1] = 7;
+            set[2] = 7;
+            set[counter - 1] = 116;
+        }
+    }
+
     void Play()
     {
         system("cls");
         Make_Game_Borad();
-        srand(time(0));
         Score = 0;
         int set[4] = {116, 7, 7, 0};
-        int mod = 1 + rand() % 24;
-        int nmod = 1 + rand() % 24;
+        int mod = RndSel();
+        int nmod = RndSel();
         int X = 6 + 5 * boardsize / 2;
         int Y = -1 + boardsize / 2;
         ConClr(95);
@@ -819,7 +840,7 @@ public:
                 Row_Checker();
                 cord = -1;
                 mod = nmod;
-                nmod = 1 + rand() % 24;
+                nmod = RndSel();
                 ConClr(95);
                 Next_mod(X - 6, Y, nmod);
                 ConClr(7);
