@@ -52,23 +52,34 @@ private:
     bool Hard_Bar_4_1[4][4] = {{true, true, true, true}, {false, false, false, false}, {false, false, false, false}, {false, false, false, false}};
     bool Hard_Bar_4_2[4][4] = {{true, false, false, false}, {true, false, false, false}, {true, false, false, false}, {true, false, false, false}};
     bool Board[100][100] = {false};
+    bool Tmp[100][100] = {false};
+    int cord = 0;
     unsigned int Score = 0;
 
-public:
-    void Render_Game_Board()
+    void Render_Game_Board(bool board[100][100])
     {
         for (int i = 0; i < boardsize; i++)
         {
             for (int j = 0; j < boardsize; j++)
             {
                 ConXY(2 * i + 2, j + 1);
-                if (Board[i][j])
+                if (board[i][j])
                     cout << '#';
                 else
                     cout << '-';
             }
         }
     }
+    void Copy_Board_To_Tmp()
+    {
+        for (int i = 0; i < boardsize; i++)
+        {
+            for (int j = 0; j < boardsize; j++)
+                Tmp[i][j] = Board[i][j];
+        }
+    }
+
+public:
     void Make_Game_Borad()
     {
         ConClr(238);
@@ -202,6 +213,8 @@ public:
             }
             if (Y > 0)
                 break;
+            if (Y < 0 && i == boardsize - y)
+                return false;
         }
         if (Y == -1)
             Y = boardsize - y;
@@ -213,7 +226,7 @@ public:
                     Board[X + k][Y + i] = true;
             }
         }
-        Render_Game_Board();
+        Render_Game_Board(Board);
         return true;
     }
     void Do(int cor, int mod)
@@ -332,8 +345,119 @@ public:
             Score += 10;
         }
         if (f)
-            return Row_Checker();        
-        Render_Game_Board();
+            return Row_Checker();
+        Render_Game_Board(Board);
+    }
+    void Move(int cor, bool right, int x, bool obj[4][4])
+    {
+        if (right)
+            cor++;
+        else
+            cor--;
+        if (right && cor + x > boardsize)
+            return;
+        if (!right && cor < 0)
+            return;
+        Copy_Board_To_Tmp();
+        for (int i = 0; i < x; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                if (obj[i][j])
+                {
+                    if (Tmp[i + cord][j])
+                    {
+                        if (right)
+                            cor++;
+                        else
+                            cor--;
+                        return Move(cor, right, x, obj);
+                    }
+                    Tmp[i + cord][j] = true;
+                }
+            }
+        }
+        Render_Game_Board(Tmp);
+        cord = cor;
+    }
+    void Move_mod(int mod, bool R)
+    {
+        switch (mod)
+        {
+        case 1:
+            Move(cord, R, 1, easy_Single);
+            break;
+        case 2:
+            Move(cord, R, 2, easy_Bar_2);
+            break;
+        case 3:
+            Move(cord, R, 1, easy_Bar_1);
+            break;
+        case 4:
+            Move(cord, R, 2, easy_Square);
+            break;
+        case 5:
+            Move(cord, R, 2, Norm_L_1);
+            break;
+        case 6:
+            Move(cord, R, 2, Norm_L_2);
+            break;
+        case 7:
+            Move(cord, R, 2, Norm_L_3);
+            break;
+        case 8:
+            Move(cord, R, 2, Norm_L_4);
+            break;
+        case 9:
+            Move(cord, R, 3, Norm_Bar_3_1);
+            break;
+        case 10:
+            Move(cord, R, 1, Norm_Bar_3_2);
+            break;
+        case 11:
+            Move(cord, R, 2, Hard_LL_1);
+            break;
+        case 12:
+            Move(cord, R, 2, Hard_LL_2);
+            break;
+        case 13:
+            Move(cord, R, 3, Hard_LL_3);
+            break;
+        case 14:
+            Move(cord, R, 3, Hard_LL_4);
+            break;
+        case 15:
+            Move(cord, R, 2, Hard_L_1);
+            break;
+        case 16:
+            Move(cord, R, 2, Hard_L_2);
+            break;
+        case 17:
+            Move(cord, R, 2, Hard_L_3);
+            break;
+        case 18:
+            Move(cord, R, 2, Hard_L_4);
+            break;
+        case 19:
+            Move(cord, R, 2, Hard_T_1);
+            break;
+        case 20:
+            Move(cord, R, 2, Hard_T_2);
+            break;
+        case 21:
+            Move(cord, R, 3, Hard_T_3);
+            break;
+        case 22:
+            Move(cord, R, 3, Hard_T_4);
+            break;
+        case 23:
+            Move(cord, R, 1, Hard_Bar_4_1);
+            break;
+        case 24:
+            Move(cord, R, 4, Hard_Bar_4_2);
+            break;
+        }
+    
     }
 };
 
@@ -343,6 +467,6 @@ int main()
     game.start_menu();
     system("cls");
     game.Make_Game_Borad();
-    game.Row_Checker();
+    char keys = _getch();
     return 0;
 }
