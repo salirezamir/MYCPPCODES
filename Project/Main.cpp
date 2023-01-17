@@ -632,8 +632,8 @@ public:
         srand(time(0));
         Score = 0;
         int set[4] = {116, 7, 7, 0};
-        int mod = rand() % 24;
-        int nmod = rand() % 24;
+        int mod = 1 + rand() % 24;
+        int nmod = 1 + rand() % 24;
         int X = 6 + 5 * boardsize / 2;
         int Y = boardsize / 2;
         ConClr(95);
@@ -672,6 +672,11 @@ public:
                 {
                     if (HighScore < Score)
                         HighScore = Score;
+                    for (int i = 0; i < boardsize; i++)
+                    {
+                        for (int j = 0; j < boardsize; j++)
+                            Board[i][j] = false;
+                    }
                     return Play();
                 }
                 if (counter == 2)
@@ -710,7 +715,7 @@ public:
                 Row_Checker();
                 cord = -1;
                 mod = nmod;
-                nmod = rand() % 24;
+                nmod = 1 + rand() % 24;
                 ConXY(X - 5, Y);
                 ConClr(95);
                 Next_mod(X - 5, Y, nmod);
