@@ -494,10 +494,10 @@ private:
                 {
                     if (Tmp[i + cor][j])
                     {
-                        if (right)
-                            cor++;
-                        else
-                            cor--;
+                        // if (right)
+                        //     cor++;
+                        // else
+                        //     cor--;
                         return Move(cor, right, x, obj);
                     }
                     Tmp[i + cor][j] = true;
@@ -690,10 +690,10 @@ public:
         int Y = 10;
         int tmp = 0;
         ConClr(7);
-        ConXY(X - 14, Y + 15);
-        cout << "   Github:salirezamir/MYCPPCODES/Project    ";
-        ConXY(X - 14, Y + 16);
-        cout << "Use up & down Arrow keys for menu navigating";
+        ConXY(X - 16, Y + 15);
+        cout << "  Use up & down Arrow keys for menu navigating ";
+        ConXY(X - 16, Y + 16);
+        cout << "Telegram : @JVUXE | @TheRealStan_313 | @mmrezaw";
         int counter = 1;
         char key;
         char keyz;
