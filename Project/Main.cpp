@@ -688,6 +688,11 @@ public:
         int set[3] = {116, 7, 7};
         int X = 50;
         int Y = 10;
+        ConClr(7);
+        ConXY(X - 14, Y + 15);
+        cout << "   Github:salirezamir/MYCPPCODES/Project    ";
+        ConXY(X - 14, Y + 16);
+        cout << "Use up & down Arrow keys for menu navigating";
         int counter = 1;
         char key;
         char keyz;
