@@ -51,7 +51,7 @@ private:
     bool Tmp[100][100] = {false};
     int cord = 0;
     unsigned int Score = 0;
-    unsigned int boardsize[2] = {11, 11};
+    int boardsize[2] = {11, 11};
     unsigned int HighScore = 0;
     int diff[3] = {1, 1, 1};
 
@@ -65,15 +65,15 @@ private:
     int RndSel()
     {
         srand(time(0));
-        int asd = 4 * diff[0] + 10 * diff[1] + 12 * diff[2];
+        int asd = 4 * diff[0] + 8 * diff[1] + 12 * diff[2];
         int opt = 1 + (rand() % asd);
         if (opt <= 4 * diff[0])
             return Round_up(opt / diff[0]);
         opt -= 4 * diff[0];
-        if (opt <= 6 * diff[1])
+        if (opt <= 8 * diff[1])
             return Round_up(4 + (opt / diff[1]));
-        opt -= 6 * diff[1];
-        return Round_up(14 + (opt / diff[2]));
+        opt -= 8 * diff[1];
+        return Round_up(12 + (opt / diff[2]));
     }
 
     void Render_Game_Board(bool board[100][100])
@@ -688,6 +688,7 @@ public:
         int set[3] = {116, 7, 7};
         int X = 50;
         int Y = 10;
+        int tmp = 0;
         ConClr(7);
         ConXY(X - 14, Y + 15);
         cout << "   Github:salirezamir/MYCPPCODES/Project    ";
@@ -754,7 +755,6 @@ public:
                             }
                             if (counter == 2)
                             {
-                                int tmp;
                                 ConXY(X + 20, Y - 1);
                                 ConClr(207);
                                 cout << "INPUT VALUES OF LENGTHS MUST BIGGER THEN 11";
