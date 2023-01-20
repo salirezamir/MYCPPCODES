@@ -906,7 +906,7 @@ public:
                 if (!high)
                 {
                     High_Score(X, Y);
-                    high = false;
+                    high = true;
                 }
                 HighScore = Score;
             }
