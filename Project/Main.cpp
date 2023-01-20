@@ -99,6 +99,7 @@ private:
                 Tmp[i][j] = Board[i][j];
         }
     }
+
     void Clear_a_Row()
     {
         for (int i = 0; i < boardsize[1]; i++)
@@ -119,7 +120,6 @@ private:
     void Game_Over()
     {
         system("cls");
-        // ConXY(36, 0);
         ConClr(4);
         cout << "   ********      **     ****     **** ********     *******   **      ** ******** *******  \n  **//////**    ****   /**/**   **/**/**/////     **/////** /**     /**/**///// /**////** \n **      //    **//**  /**//** ** /**/**         **     //**/**     /**/**      /**   /** \n/**           **  //** /** //***  /**/*******   /**      /**//**    ** /******* /*******  \n/**    ***** **********/**  //*   /**/**////    /**      /** //**  **  /**////  /**///**  \n//**  ////**/**//////**/**   /    /**/**        //**     **   //****   /**      /**  //** \n //******** /**     /**/**        /**/********   //*******     //**    /********/**   //**\n  ////////  //      // //         // ////////     ///////       //     //////// //     // \n";
         int set[2] = {116, 7};
@@ -265,15 +265,8 @@ private:
             ConXY((1 + boardsize[0]) * 2, i);
             cout << " ";
         }
-        for (int i = 0; i < boardsize[0]; i++)
-        {
-            for (int j = 0; j < boardsize[1]; j++)
-            {
-                ConXY(2 * i + 2, j + 1);
-                cout << "-";
-            }
-        }
     }
+
     void change_Game_Board(int X, int x, int y, bool obj[4][4])
     {
         int Y = -1;
@@ -296,7 +289,6 @@ private:
                                         Board[X + k][Y + i] = true;
                                 }
                             }
-                            Render_Game_Board(Board);
                             return;
                         }
                     }
@@ -322,6 +314,7 @@ private:
         }
         return;
     }
+
     void Do(int cor, int mod)
     {
         switch (mod)
@@ -402,6 +395,7 @@ private:
         cord = 0;
         return;
     }
+
     void Row_Checker()
     {
         bool f[2];
@@ -424,6 +418,22 @@ private:
                 break;
             }
         }
+        if (f[0])
+        {
+            for (int i = y; i > 0; i--)
+            {
+                for (int j = 0; j < boardsize[0]; j++)
+                {
+                    Board[j][i] = Board[j][i - 1];
+                }
+            }
+            for (int j = 0; j < boardsize[0]; j++)
+            {
+                Board[j][0] = false;
+            }
+            Score += 10;
+            return Row_Checker();
+        }
         for (int i = 0; i < boardsize[0]; i++)
         {
             f[1] = true;
@@ -441,40 +451,17 @@ private:
                 break;
             }
         }
-        if (f[0])
-        {
-            for (int i = y; i > 0; i--)
-            {
-                for (int j = 0; j < boardsize[0]; j++)
-                {
-                    Board[j][i] = Board[j][i - 1];
-                }
-            }
-            for (int j = 0; j < boardsize[0]; j++)
-            {
-                Board[j][0] = false;
-            }
-            Score += 10;
-            return Row_Checker();
-        }
         if (f[1])
         {
-            for (int i = x; i < boardsize[0] - 1; i++)
-            {
-                for (int j = 0; j < boardsize[1]; j++)
-                {
-                    Board[i][j] = Board[i + 1][j];
-                }
-            }
             for (int j = 0; j < boardsize[1]; j++)
             {
-                Board[boardsize[0] - 1][j] = false;
+                Board[x][j] = false;
             }
             Score += 10;
             return Row_Checker();
         }
-        Render_Game_Board(Board);
     }
+
     bool Move(int cor, bool right, int x, bool obj[4][4])
     {
         if (right)
@@ -493,13 +480,7 @@ private:
                 if (obj[i][j])
                 {
                     if (Tmp[i + cor][j])
-                    {
-                        // if (right)
-                        //     cor++;
-                        // else
-                        //     cor--;
                         return Move(cor, right, x, obj);
-                    }
                     Tmp[i + cor][j] = true;
                 }
             }
