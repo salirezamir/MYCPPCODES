@@ -673,8 +673,8 @@ public:
         ConClr(7);
         ConXY(X - 16, Y + 15);
         cout << "  Use up & down Arrow keys for menu navigating ";
-        ConXY(X - 16, Y + 16);
-        cout << "Telegram : @JVUXE | @TheRealStan_313 | @mmrezaw";
+        ConXY(X - 1, Y + 16);
+        cout << "Telegram : @JVUXE";
         int counter = 1;
         char key;
         char keyz;
